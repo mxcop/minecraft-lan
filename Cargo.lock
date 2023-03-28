@@ -192,19 +192,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "mc-lan-test"
+name = "memchr"
+version = "2.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
+
+[[package]]
+name = "minecraft-lan"
 version = "0.1.0"
 dependencies = [
  "async-net",
  "regex",
  "socket2 0.3.19",
 ]
-
-[[package]]
-name = "memchr"
-version = "2.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2dffe52ecf27772e601905b7522cb4ef790d2cc203488bbd0e2fe85fcb74566d"
 
 [[package]]
 name = "parking"

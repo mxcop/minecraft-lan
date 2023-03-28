@@ -1,4 +1,4 @@
-use mc_lan_test::scan_lan;
+use minecraft_lan::scan_lan;
 
 fn main() {
     let servers = scan_lan().unwrap();

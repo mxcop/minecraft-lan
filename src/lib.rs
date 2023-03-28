@@ -69,11 +69,14 @@ pub fn scan_lan() -> io::Result<Vec<MinecraftServer>> {
     
             // Combine the port and address.
             let addr = format!("{}:{}", from.ip(), game_port);
-    
-            servers.push(MinecraftServer {
-                 title: game_title.to_string(),
-                 addr: addr.parse().expect("failed to parse server addr")
-            });
+
+            // Check if the server isn't already in the vector:
+            if servers.iter().any(|s| s.addr == addr) == false {
+                servers.push(MinecraftServer {
+                    title: game_title.to_string(),
+                    addr
+               });
+            }
         }
     });
 
@@ -82,16 +85,5 @@ pub fn scan_lan() -> io::Result<Vec<MinecraftServer>> {
     let socket = UdpSocket::bind("127.0.0.1:26456")?;
     socket.send_to(&[0; 1], format!("127.0.0.1:{}", socket_port))?;
     
-    let mut servers = receive_thread.join().expect("failed to join thread");
-    
-    // Remove duplicates:
-    let set: std::collections::BTreeSet<_> = servers.drain(..).collect();
-    for x in set {
-        if let Some(last) = servers.last() {
-            if last.title == x.title { continue; }
-        }
-        servers.push(x);
-    }
-
-    Ok(servers)
+    Ok(receive_thread.join().expect("failed to join thread"))
 }
